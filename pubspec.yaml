@@ -1,7 +1,7 @@
 name: license_view_fluent_ui
 description: "Creates a view that shows licenses for software used
   by the application."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/DamianAldair/license_view_fluent_ui
 repository: https://github.com/DamianAldair/license_view_fluent_ui
 

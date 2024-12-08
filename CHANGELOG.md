@@ -1,3 +1,9 @@
+## 1.0.1
+
+- Refactoring.
+- Important bug fix.
+
+
 ## 1.0.0
 
 - LicenseView widget.
