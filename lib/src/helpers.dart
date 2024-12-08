@@ -27,7 +27,7 @@ double getGutterSize(BuildContext context) =>
 const double appBarHeight = 80.0;
 
 /// Default title for LicenseView.
-String get licensesViewTitle => 'Licenses';
+String get defaultLicensesViewTitle => 'Licenses';
 
 /// Default subtitle for PackageLicense.
-String packageLicenseSubtitle(int length) => '$length licenses';
+String defaultPackageLicenseSubtitle(int length) => '$length licenses';

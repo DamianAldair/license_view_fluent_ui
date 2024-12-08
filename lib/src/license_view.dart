@@ -102,16 +102,16 @@ class _LicenseViewState extends State<LicenseView> {
           builder: (_, BoxConstraints constraints) {
             final split = constraints.maxWidth > 800.0;
 
-            final appBar = !showingPackages
-                ? null
-                : NavigationAppBar(
+            final appBar = split || showingPackages
+                ? NavigationAppBar(
                     height: appBarHeight,
                     leading: const BackButton(),
                     title: DefaultTextStyle.merge(
                       style: FluentTheme.of(context).typography.bodyLarge,
-                      child: widget.title ?? Text(licensesViewTitle),
+                      child: widget.title ?? Text(defaultLicensesViewTitle),
                     ),
-                  );
+                  )
+                : null;
 
             final about = AboutProgram(
               name: widget.applicationName ?? defaultAppName(context),
@@ -191,16 +191,19 @@ class _LicenseViewState extends State<LicenseView> {
 
   Widget _buildPackageList(Widget about) {
     return ListView.builder(
+      controller: scrollController,
       itemCount: licenseData!.packages.length + 1,
       itemBuilder: (_, int i) {
         if (i == 0) return about;
 
         final name = licenseData!.packages[i - 1];
         final bindings = licenseData!.packageLicenseBindings[name]!;
+        final subtitle = widget.packageLicenseSubtitle?.call(bindings.length) ??
+            defaultPackageLicenseSubtitle(bindings.length);
         return ListTile(
           leading: const Icon(FluentIcons.library),
           title: Text(name),
-          subtitle: Text(packageLicenseSubtitle(bindings.length)),
+          subtitle: Text(subtitle),
           onPressed: () => setState(() {
             showingPackages = false;
             selectedPackage = i - 1;
@@ -221,7 +224,7 @@ class _LicenseViewState extends State<LicenseView> {
       ),
       showBackButton: true,
       onPressedBackButton: () => setState(() => showingPackages = true),
-      subtitle: packageLicenseSubtitle,
+      subtitle: widget.packageLicenseSubtitle ?? defaultPackageLicenseSubtitle,
     );
   }
 
@@ -251,7 +254,8 @@ class _LicenseViewState extends State<LicenseView> {
                       .toList(growable: false),
                 ),
                 showBackButton: false,
-                subtitle: packageLicenseSubtitle,
+                subtitle: widget.packageLicenseSubtitle ??
+                    defaultPackageLicenseSubtitle,
               ),
             );
           },

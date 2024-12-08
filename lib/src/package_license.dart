@@ -122,7 +122,7 @@ class _PackageLicenseState extends State<PackageLicense> {
     ];
 
     final length = widget.args.licenseEntries.length;
-
+    final subtitle = widget.subtitle?.call(length);
     return NavigationView(
       appBar: NavigationAppBar(
           height: appBarHeight,
@@ -139,8 +139,7 @@ class _PackageLicenseState extends State<PackageLicense> {
                 style: typography.bodyLarge,
               ),
               Text(
-                widget.subtitle?.call(length) ??
-                    packageLicenseSubtitle.call(length),
+                subtitle ?? defaultPackageLicenseSubtitle(length),
                 style: typography.body,
               ),
             ],
